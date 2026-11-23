@@ -1,0 +1,23 @@
+{
+  "name": "Je suis là, accompagner l'accouchement",
+  "short_name": "Je suis là",
+  "description": "Positions, minuteur de contractions et respiration pour le ou la partenaire pendant le travail.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#14111a",
+  "theme_color": "#14111a",
+  "shortcuts": [
+    { "name": "Minuteur de contractions", "short_name": "Minuteur", "url": "./#/timer", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Mode coach", "short_name": "Coach", "url": "./#/coach", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Appeler la maternité", "short_name": "Maternité", "url": "./#/mat", "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }] }
+  ],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

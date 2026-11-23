@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" role="img" aria-label="Fente asymétrique">
+<defs><radialGradient id="bg"><stop offset="0" stop-color="#3a2f48"/><stop offset="1" stop-color="#3a2f48" stop-opacity="0"/></radialGradient><marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f2c46d"/></marker></defs>
+<circle cx="100" cy="84" r="86" fill="url(#bg)"/>
+<line x1="8" y1="146" x2="192" y2="146" stroke="#4d425c" stroke-width="3" stroke-linecap="round"/>
+<line x1="110" y1="110" x2="140" y2="110" stroke="#8d81a3" stroke-width="4" stroke-linecap="round"/><line x1="112" y1="110" x2="112" y2="146" stroke="#8d81a3" stroke-width="4" stroke-linecap="round"/><line x1="138" y1="110" x2="138" y2="146" stroke="#8d81a3" stroke-width="4" stroke-linecap="round"/><line x1="140" y1="110" x2="140" y2="80" stroke="#8d81a3" stroke-width="4" stroke-linecap="round"/>
+<polyline points="50,42 44,64 42,84" fill="none" stroke="#6f93ad" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="50,87 46,116 44,146" fill="none" stroke="#6f93ad" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="50" y1="42" x2="50" y2="87" stroke="#9ec3dc" stroke-width="14" stroke-linecap="round"/>
+<polyline points="50,87 52,116 54,146" fill="none" stroke="#9ec3dc" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="50,42 66,58 82,64" fill="none" stroke="#9ec3dc" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="42.5" y1="27" x2="40.5" y2="43" stroke="#3f5d75" stroke-width="9" stroke-linecap="round"/>
+<circle cx="47.4" cy="28.2" r="11.2" fill="#3f5d75"/>
+<circle cx="50.8" cy="30.6" r="9.8" fill="#9ec3dc"/>
+<polyline points="98,44 94,66 96,86" fill="none" stroke="#b9735d" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="90,88 84,117 78,146" fill="none" stroke="#b9735d" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="98" y1="44" x2="90" y2="88" stroke="#f0a58a" stroke-width="14" stroke-linecap="round"/>
+<path d="M95.6,57.2 Q125.1,78 90.2,87.1" fill="#f0a58a" stroke="#f0a58a" stroke-width="5" stroke-linejoin="round"/>
+<polyline points="90,88 116,80 124,108" fill="none" stroke="#f0a58a" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="98,44 110,62 116,78" fill="none" stroke="#f0a58a" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="92" cy="28.2" r="5.2" fill="#7d4536"/>
+<circle cx="99.8" cy="29.8" r="11.2" fill="#7d4536"/>
+<circle cx="102.7" cy="32.7" r="9.8" fill="#f0a58a"/>
+</svg>

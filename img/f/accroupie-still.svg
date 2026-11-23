@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" role="img" aria-label="Accroupie soutenue">
+<defs><radialGradient id="bg"><stop offset="0" stop-color="#3a2f48"/><stop offset="1" stop-color="#3a2f48" stop-opacity="0"/></radialGradient><marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f2c46d"/></marker></defs>
+<circle cx="100" cy="84" r="86" fill="url(#bg)"/>
+<line x1="8" y1="146" x2="192" y2="146" stroke="#4d425c" stroke-width="3" stroke-linecap="round"/>
+<line x1="38" y1="106" x2="70" y2="106" stroke="#8d81a3" stroke-width="4" stroke-linecap="round"/><line x1="40" y1="106" x2="40" y2="146" stroke="#8d81a3" stroke-width="4" stroke-linecap="round"/><line x1="68" y1="106" x2="68" y2="146" stroke="#8d81a3" stroke-width="4" stroke-linecap="round"/><line x1="40" y1="106" x2="40" y2="70" stroke="#8d81a3" stroke-width="4" stroke-linecap="round"/>
+<polyline points="60,58 74,78 88,86" fill="none" stroke="#6f93ad" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="58,100 80,106 78,146" fill="none" stroke="#6f93ad" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="60" y1="58" x2="58" y2="100" stroke="#9ec3dc" stroke-width="14" stroke-linecap="round"/>
+<polyline points="58,100 84,104 84,146" fill="none" stroke="#9ec3dc" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="60,58 76,74 90,82" fill="none" stroke="#9ec3dc" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="52.7" y1="42.6" x2="49.9" y2="58.5" stroke="#3f5d75" stroke-width="9" stroke-linecap="round"/>
+<circle cx="57.5" cy="44.1" r="11.2" fill="#3f5d75"/>
+<circle cx="60.8" cy="46.6" r="9.8" fill="#9ec3dc"/>
+<polyline points="98,78 106,100 116,110" fill="none" stroke="#b9735d" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="98,122 118,114 108,146" fill="none" stroke="#b9735d" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="98" y1="78" x2="98" y2="122" stroke="#f0a58a" stroke-width="14" stroke-linecap="round"/>
+<path d="M98,91.2 Q130.3,106.2 98,121.1" fill="#f0a58a" stroke="#f0a58a" stroke-width="5" stroke-linejoin="round"/>
+<polyline points="98,122 122,112 114,146" fill="none" stroke="#f0a58a" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="98,78 110,98 120,108" fill="none" stroke="#f0a58a" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="89.5" cy="64" r="5.2" fill="#7d4536"/>
+<circle cx="97.4" cy="64.2" r="11.2" fill="#7d4536"/>
+<circle cx="100.8" cy="66.6" r="9.8" fill="#f0a58a"/>
+<line x1="150" y1="100" x2="150" y2="132" stroke="#f2c46d" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah)"/>
+</svg>

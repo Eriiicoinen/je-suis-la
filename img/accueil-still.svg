@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" role="img" aria-label="Je suis là">
+<defs><radialGradient id="bg"><stop offset="0" stop-color="#3a2f48"/><stop offset="1" stop-color="#3a2f48" stop-opacity="0"/></radialGradient><marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f2c46d"/></marker></defs>
+<circle cx="100" cy="84" r="86" fill="url(#bg)"/>
+<line x1="8" y1="146" x2="192" y2="146" stroke="#4d425c" stroke-width="3" stroke-linecap="round"/>
+<g><polyline points="116,42 108,58 92,52" fill="none" stroke="#6f93ad" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="118,88 124,116 128,146" fill="none" stroke="#6f93ad" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="116" y1="42" x2="118" y2="88" stroke="#9ec3dc" stroke-width="14" stroke-linecap="round"/>
+<polyline points="118,88 118,116 120,146" fill="none" stroke="#9ec3dc" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="116,42 102,62 88,74" fill="none" stroke="#9ec3dc" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="120.5" cy="28.1" r="10.6" fill="#3f5d75"/>
+<circle cx="117.2" cy="30.6" r="9.8" fill="#9ec3dc"/>
+<polyline points="82,46 74,66 72,86" fill="none" stroke="#b9735d" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="80,90 76,118 72,146" fill="none" stroke="#b9735d" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="82" y1="46" x2="80" y2="90" stroke="#f0a58a" stroke-width="14" stroke-linecap="round"/>
+<path d="M81.4,59.2 Q113,75.6 80,89.1" fill="#f0a58a" stroke="#f0a58a" stroke-width="5" stroke-linejoin="round"/>
+<polyline points="80,90 84,118 84,146" fill="none" stroke="#f0a58a" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="82,46 94,64 104,72" fill="none" stroke="#f0a58a" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="73.6" cy="31.5" r="5.2" fill="#7d4536"/>
+<circle cx="81.5" cy="32.1" r="11.2" fill="#7d4536"/>
+<circle cx="84.8" cy="34.6" r="9.8" fill="#f0a58a"/></g>
+<g transform="translate(100 20)"><g><path d="M0,-6 c-4,-6 -12,-2 -8,4 l8,8 l8,-8 c4,-6 -4,-10 -8,-4z" fill="#f2c46d"/></g></g>
+</svg>

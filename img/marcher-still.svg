@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" role="img" aria-label="Marcher">
+<defs><radialGradient id="bg"><stop offset="0" stop-color="#3a2f48"/><stop offset="1" stop-color="#3a2f48" stop-opacity="0"/></radialGradient><marker id="ah" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#f2c46d"/></marker></defs>
+<circle cx="100" cy="84" r="86" fill="url(#bg)"/>
+<line x1="8" y1="146" x2="192" y2="146" stroke="#4d425c" stroke-width="3" stroke-linecap="round"/>
+<polyline points="124,40 132,62 134,84" fill="none" stroke="#6f93ad" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="124,87 118,116 114,146" fill="none" stroke="#6f93ad" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="124" y1="40" x2="124" y2="87" stroke="#9ec3dc" stroke-width="14" stroke-linecap="round"/>
+<polyline points="124,87 128,116 134,146" fill="none" stroke="#9ec3dc" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="124,40 112,62 104,70" fill="none" stroke="#9ec3dc" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="126.6" cy="26.2" r="10.6" fill="#3f5d75"/>
+<circle cx="123.2" cy="28.6" r="9.8" fill="#9ec3dc"/>
+<polyline points="80,44 70,64 68,84" fill="none" stroke="#b9735d" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="78,88 72,117 62,146" fill="none" stroke="#b9735d" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="80" y1="44" x2="78" y2="88" stroke="#f0a58a" stroke-width="14" stroke-linecap="round"/>
+<path d="M79.4,57.2 Q111,73.6 78,87.1" fill="#f0a58a" stroke="#f0a58a" stroke-width="5" stroke-linejoin="round"/>
+<polyline points="78,88 88,116 96,146" fill="none" stroke="#f0a58a" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="80,44 92,64 102,70" fill="none" stroke="#f0a58a" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="71.6" cy="29.5" r="5.2" fill="#7d4536"/>
+<circle cx="79.5" cy="30.1" r="11.2" fill="#7d4536"/>
+<circle cx="82.8" cy="32.6" r="9.8" fill="#f0a58a"/>
+<line x1="40" y1="128" x2="60" y2="128" stroke="#f2c46d" stroke-width="3.5" stroke-linecap="round" marker-end="url(#ah)"/>
+</svg>
