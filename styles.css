@@ -523,3 +523,16 @@ body.red .stopbtn, body.red .btn.on { box-shadow: none; }
 .sosbar { height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; margin-top: 6px; }
 .sosbar span { display: block; height: 100%; width: 0; background: var(--accent); transition: width .25s linear; }
 .coach-breath[hidden], .sosbar[hidden] { display: none; }
+
+/* Intensité des contractions (1 à 5) */
+.intens .ibtns { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 10px; }
+.ib { min-height: 60px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface-2); color: inherit; font: inherit; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 4px 2px; cursor: pointer; }
+.ib b { font-size: 1.35em; line-height: 1; }
+.ib span { font-size: .62em; color: var(--muted); }
+.ib[aria-pressed="true"] { outline: 3px solid var(--accent); }
+.ib.i1, .ichip.i1 { background: #2c3a33; } .ib.i2, .ichip.i2 { background: #3a3a2a; } .ib.i3, .ichip.i3 { background: #463625; }
+.ib.i4, .ichip.i4 { background: #4d2b28; } .ib.i5, .ichip.i5 { background: #5a2430; }
+.ichip { min-width: 34px; min-height: 34px; border-radius: 10px; border: 1px dashed var(--line); background: transparent; color: inherit; font: inherit; font-weight: 700; cursor: pointer; }
+.ichip.set { border-style: solid; }
+.linkbtn { background: none; border: 0; color: var(--muted); font: inherit; font-size: .85em; text-decoration: underline; padding: 8px 0 0; cursor: pointer; }
+body.red .ib, body.red .ichip { background: #1a0606 !important; }

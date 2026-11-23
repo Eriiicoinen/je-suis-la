@@ -1,6 +1,6 @@
 // Service worker : met l'app en cache pour fonctionner sans réseau.
 // Change VERSION à chaque mise à jour du contenu pour forcer le rafraîchissement.
-const VERSION = "jsl-v13";
+const VERSION = "jsl-v14";
 const FILES = [
   "./", "index.html", "styles.css", "app.js", "content.js", "config.js",
   "manifest.webmanifest", "icons/icon.svg", "icons/icon-192.png", "icons/icon-512.png",

@@ -269,6 +269,7 @@
     if (first) lines.push(`Contractions notées depuis ${clock(first.s)} (il y a ${ago(now - first.s)}).`);
     if (st.count >= 2 && st.avgInt) lines.push(`Dernière heure : ${st.count} contractions, environ toutes les ${human(st.avgInt)}, durée moyenne ${human(st.avgDur)}.`);
     else if (st.count === 1) lines.push("Une seule contraction notée dans la dernière heure.");
+    if (st.avgI) lines.push(`Intensité ressentie : ${fmtI(st.avgI)}/5 en moyenne sur la dernière heure.`);
     S.events.filter((e) => C.events[e.type] && !C.events[e.type].noSummary).forEach((e) => {
       const col = e.type === "eaux" && e.detail ? ` (liquide ${(C.waterColors.find((w) => w.id === e.detail) || {}).label.toLowerCase()})` : "";
       lines.push(`${C.events[e.type].label} à ${clock(e.t)}${col}.`);
@@ -431,6 +432,7 @@
         ${act("#/bag", "🎒", "Sac de maternité")}
         ${act("#/questions", "❓", "Questions à poser")}
         ${act("#/imprevus", "🧭", "Les imprévus")}
+        ${act("#/partir", "🚗", "Quand partir ?")}
         ${act("#/words", "💬", "Ses mots à elle")}
         ${act("#/msg", "📱", "Messages prêts")}
       </div>
@@ -443,6 +445,7 @@
       ${dayJBanner()}
       ${currentBanner()}
       <a class="btn primary block" href="#/coach" style="margin-top:14px;min-height:64px">🎯 Mode coach : je te guide contraction par contraction</a>
+      <a class="btn block" href="#/partir" style="margin-top:10px">🚗 Quand partir à la maternité ?</a>
       <p class="muted" style="margin-top:14px">Où en est-on ? Choisis la phase, je te montre quoi faire.</p>
       ${tiles}
       <button class="toggle" id="epi" aria-pressed="${S.epidural}">
@@ -653,7 +656,8 @@
       const r = median(ints.slice(3)) / median(ints.slice(0, 3));
       trend = r < 0.85 ? "closer" : r > 1.18 ? "wider" : "stable";
     }
-    return { count: lastHour.length, avgDur, avgInt, reached, regularFor, winMs, trend };
+    const avgI = avg(lastHour.filter((c) => c.i).map((c) => c.i));
+    return { count: lastHour.length, avgDur, avgInt, avgI, reached, regularFor, winMs, trend };
   }
   const TREND = { closer: "↘ Elles se rapprochent", wider: "↗ Elles s'espacent", stable: "→ Rythme stable" };
 
@@ -686,6 +690,36 @@
     };
   }
 
+  // Intensité (1 à 5) : demandée juste après FIN, modifiable dans l'historique.
+  const fmtI = (v) => (Math.round(v * 10) / 10).toString().replace(".", ",");
+  let editI = null; // index de la contraction dont on modifie l'intensité
+  function intensityAsk() {
+    let idx = editI;
+    if (idx === null) {
+      idx = S.contractions.length - 1;
+      const l = S.contractions[idx];
+      if (!l || l.e === null || l.i || l.noI || Date.now() - l.e > 10 * MIN) return "";
+    }
+    const c = S.contractions[idx]; if (!c || c.e === null) return "";
+    return `<div class="box intens" id="intens" data-idx="${idx}">
+      <strong>Intensité de ${editI === null ? "cette contraction" : `celle de ${clock(c.s)}`} ?</strong>
+      <span class="muted small"> son ressenti, de 1 à 5</span>
+      <div class="ibtns">${C.intensity.map((x) => `<button class="ib i${x.v}" data-i="${x.v}" aria-pressed="${c.i === x.v}"><b>${x.v}</b><span>${esc(x.label)}</span></button>`).join("")}</div>
+      <p class="muted small" style="margin:6px 0 0">${C.intensity.map((x) => `<b>${x.v}</b> ${esc(x.hint.toLowerCase())}`).join(" · ")}</p>
+      ${editI === null ? `<button class="linkbtn" data-i="0">Passer</button>` : `<button class="linkbtn" data-i="-1">Annuler</button>`}
+    </div>`;
+  }
+  function bindIntensity(render) {
+    const el = $("#intens"); if (!el) return;
+    el.onclick = (e) => {
+      const b = e.target.closest("[data-i]"); if (!b) return;
+      const c = S.contractions[+el.dataset.idx]; if (!c) return;
+      const v = +b.dataset.i;
+      if (v > 0) { c.i = v; delete c.noI; } else if (v === 0) c.noI = 1;
+      editI = null; vibrate(30); save(); go(render);
+    };
+  }
+
   let pendingWater = false; // choix de la couleur du liquide en cours
   let pendingNote = false;  // saisie d'une note en cours
   const eventDetail = (e) => !e.detail ? "" : e.type === "eaux" ? ((C.waterColors.find((w) => w.id === e.detail) || {}).label || "") : e.detail;
@@ -700,6 +734,7 @@
         <td>${clock(c.s)}</td>
         <td>${c.e === null ? "en cours" : (c.est ? "≈ " : "") + dur(c.e - c.s)}</td>
         <td>${prev ? dur(c.s - prev.s) : "–"}</td>
+        <td>${c.e === null ? "" : `<button class="ichip ${c.i ? "set i" + c.i : ""}" data-editi="${globalIdx}" aria-label="Modifier l'intensité">${c.i || "+"}</button>`}</td>
         <td><button class="x sm" data-delc="${globalIdx}" aria-label="Supprimer cette contraction">×</button></td>
       </tr>`;
     }).reverse().join("");
@@ -724,16 +759,17 @@
         <span>${running ? "FIN" : "DÉBUT"}<small data-since="${running ? last.s : last && last.e ? last.e : ""}"></small>
         <small>${running ? "de la contraction" : last && last.e ? "de repos" : "de contraction"}</small></span>
       </button>
+      ${intensityAsk()}
       <div class="stats">
         <div class="stat"><b>${st.count}</b><span>dans la dernière heure</span></div>
         <div class="stat"><b>${st.avgDur ? dur(st.avgDur) : "–"}</b><span>durée moyenne</span></div>
         <div class="stat"><b>${st.avgInt ? dur(st.avgInt) : "–"}</b><span>écart moyen</span></div>
       </div>
-      ${st.trend ? `<p class="center trend">${TREND[st.trend]}</p>` : ""}
+      ${st.trend || st.avgI ? `<p class="center trend">${st.trend ? TREND[st.trend] : ""}${st.trend && st.avgI ? " · " : ""}${st.avgI ? `Intensité moyenne ${fmtI(st.avgI)}/5` : ""}</p>` : ""}
       ${trendChart()}
       ${rows ? `
         <table class="hist">
-          <thead><tr><th>Début</th><th>Durée</th><th>Écart</th><th></th></tr></thead>
+          <thead><tr><th>Début</th><th>Durée</th><th>Écart</th><th>Int.</th><th></th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
         <div class="row" style="margin-top:14px">
@@ -742,6 +778,7 @@
         </div>` : `<p class="muted" style="text-align:center">Pas encore de contraction notée.</p>`}
       <p class="muted small" style="margin-top:16px">Repère de départ : toutes les ${S.settings.intervalMin} min depuis ${S.settings.windowH} h.
         <a href="#/mat">Modifier</a>. L'écart se mesure du début d'une contraction au début de la suivante.</p>
+      <a class="btn block" href="#/partir" style="margin-top:8px">🚗 Quand partir à la maternité ?</a>
 
       <h2>Journal</h2>
       ${eventAlert()}
@@ -770,8 +807,13 @@
     `;
 
     const again = () => go(renderTimer);
-    $("#tap").onclick = () => { if (toggleContraction()) again(); };
+    $("#tap").onclick = () => { editI = null; if (toggleContraction()) again(); };
     bindStale(renderTimer);
+    bindIntensity(renderTimer);
+    view.querySelectorAll("[data-editi]").forEach((b) => b.onclick = () => {
+      editI = +b.dataset.editi; again();
+      const el = $("#intens"); if (el && el.scrollIntoView) el.scrollIntoView({ block: "center", behavior: "smooth" });
+    });
     view.querySelectorAll("[data-delc]").forEach((b) => b.onclick = () => {
       if (b.dataset.armed) { S.contractions.splice(+b.dataset.delc, 1); save(); updateTabbar(); return again(); }
       b.dataset.armed = "1"; b.textContent = "?"; b.classList.add("armed");
@@ -1001,6 +1043,7 @@
         ? `<p class="muted small center">Dernière : ${human(last.e - last.s)}${prev ? ` · écart ${human(last.s - prev.s)}` : ""}</p>`
         : `<p class="center">Appuie au <strong>début</strong> de la contraction : je te guide pendant, et je te rappelle l'essentiel entre deux.</p>`}
       ${eventAlert()}
+      ${intensityAsk()}
       <button class="bigbtn" id="tap"><span>DÉBUT<small>de contraction</small></span></button>
       ${rem.length ? `<h2>Entre deux contractions</h2><div id="rem">
         ${rem.map((r) => `<div class="remind">
@@ -1013,7 +1056,8 @@
       </div>
       <a class="btn block" href="#/calme" style="margin-top:10px">🧘 Et toi ? SOS calme en 60 s</a>
     `;
-    $("#tap").onclick = () => { if (toggleContraction()) { sayIndex++; go(renderCoach); } };
+    $("#tap").onclick = () => { editI = null; if (toggleContraction()) { sayIndex++; go(renderCoach); } };
+    bindIntensity(renderCoach);
     const remEl = $("#rem");
     if (remEl) remEl.onclick = (e) => {
       const b = e.target.closest("[data-log]"); if (!b) return;
@@ -1523,7 +1567,7 @@
     const T = S.training;
     const items = [
       { id: "tel", text: "Numéro de la maternité enregistré", done: !!telOf(), link: "#/mat" },
-      { id: "consignes", text: "Consignes de départ demandées à la maternité", hint: "« Quand devons-nous venir ? » Note leur réponse dans l'onglet Maternité.", manual: true, link: "#/questions" },
+      { id: "consignes", text: "Consignes de départ demandées à la maternité", hint: "« Quand devons-nous venir ? » Note leur réponse dans l'onglet Maternité.", manual: true, link: "#/partir" },
       { id: "trajet", text: "Trajet repéré, de nuit aussi", hint: "Entrée de nuit, parking, temps de route. Enregistre l'adresse pour lancer l'itinéraire en un geste.", manual: true, link: "#/mat" },
       { id: "sac", text: `Sac de maternité prêt (${bagDone}/${bagTotal})`, done: bagDone >= bagTotal * 0.8, link: "#/bag" },
       { id: "train", text: `Deux séances d'entraînement à deux (${Math.min(2, T.sessions || 0)}/2)`, done: (T.sessions || 0) >= 2, link: "#/train" },
@@ -1793,6 +1837,58 @@
       S.todo[t.dataset.id] = !S.todo[t.dataset.id]; save(); vibrate(20);
       const y = window.scrollY; go(renderTodo); window.scrollTo(0, y);
     };
+  }
+
+  // ---------- Quand partir à la maternité ? ----------
+  function leaveStatus() {
+    if (lastEvent("arrivee")) return `<div class="banner" style="border-left-color:var(--good)"><strong>🏥 Vous êtes à la maternité.</strong> Suivez les consignes de l'équipe.</div>`;
+    const ev = eventAlert();
+    if (ev) return ev;
+    const l = S.contractions[S.contractions.length - 1];
+    if (l && l.e === null && l.long) return staleBanner();
+    const st = stats(), set = S.settings;
+    const call = telOf() ? `<a class="btn primary block" style="margin-top:10px" href="tel:${esc(telOf())}">📞 Appeler ${esc(set.mName || "la maternité")}</a>` : `<br><a href="#/mat">Enregistrer le numéro de la maternité</a>`;
+    const iTxt = st.avgI ? `, intensité moyenne ${fmtI(st.avgI)}/5` : "";
+    if (st.reached) return `<div class="banner alert"><strong>📞 Votre repère est atteint</strong> (toutes les ${set.intervalMin} min depuis ${set.windowH} h${iTxt}).<br>Appelez la maternité : ils vous diront de venir.${call}</div>`;
+    if (st.regularFor) return `<div class="banner warn"><strong>⏳ Ça se met en place</strong> : écarts de ${set.intervalMin} min ou moins depuis ${ago(st.regularFor)}${iTxt}.
+      <div class="progress"><div style="width:${Math.min(100, Math.round(st.regularFor / st.winMs * 100))}%"></div></div>
+      <span class="muted small">Repère : ${set.windowH} h. Préparez la voiture et le sac. Un doute ? Appelez sans attendre.</span></div>`;
+    if (st.count) return `<div class="banner"><strong>🏠 Pas encore, d'après votre repère</strong> : ${st.count} contraction${st.count > 1 ? "s" : ""} dans la dernière heure${st.avgInt ? `, toutes les ${human(st.avgInt)} environ` : ""}${iTxt}. Continuez de les noter.</div>`;
+    return `<div class="banner"><strong>Pas de contraction notée récemment.</strong> Le jour J, notez-les dans le minuteur : cet écran vous dira où vous en êtes par rapport à votre repère.</div>`;
+  }
+  function renderLeave() {
+    const L = C.leave, set = S.settings, r = set.first ? L.rule.first : L.rule.next;
+    const list = (a) => `<ul style="margin:0;padding-left:20px">${a.map((x) => `<li style="margin:6px 0">${esc(x)}</li>`).join("")}</ul>`;
+    view.innerHTML = `
+      <div class="topbar">${backBtn(inLabour() ? "#/timer" : "#/")}<h1>🚗 Quand partir ?</h1></div>
+      ${leaveStatus()}
+      <a class="btn block" href="#/timer" style="margin-top:10px">⏱️ Minuteur de contractions</a>
+      <p class="muted small" style="margin-top:14px">${esc(L.intro)}</p>
+      <h2>Le repère courant · ${esc(r.label)}</h2>
+      <div class="box you">${esc(r.text)}</div>
+      <p class="small">Votre repère dans l'app : <strong>toutes les ${set.intervalMin} min depuis ${set.windowH} h</strong>. <a href="#/mat">Le remplacer par la consigne de votre maternité</a>.</p>
+      <h2>🚨 Appeler tout de suite, sans attendre le repère</h2>
+      <div class="box caution">${list(L.callNow)}</div>
+      <a class="btn block danger" href="tel:15" style="margin-top:6px">🚑 Urgence : 15</a>
+      <h2>Les signes que le travail s'installe</h2>
+      <div class="box">${list(L.signs)}</div>
+      <p class="muted small">Note l'intensité de chaque contraction (1 à 5) dans le minuteur : quand elle ne peut plus parler pendant (4 ou 5), le travail est souvent bien lancé.</p>
+      <h2>Partir plus tôt si…</h2>
+      <div class="box">${list(L.earlier)}</div>
+      <h2>En attendant, à la maison</h2>
+      <div class="box">${list(L.wait)}</div>
+      <h2>Le trajet</h2>
+      <div class="box">${list(L.road)}</div>
+      <div class="grid2" style="margin-top:12px">
+        <a class="btn" href="#/depart">✅ Check-list départ</a>
+        ${routeUrl() ? `<a class="btn" href="${esc(routeUrl())}" target="_blank" rel="noopener">🗺️ Itinéraire</a>` : `<a class="btn" href="#/mat">🏥 Maternité</a>`}
+      </div>
+      <p class="muted small" style="margin-top:16px">${esc(C.disclaimer)}</p>
+    `;
+    if (inLabour()) {
+      const iv = setInterval(() => go(renderLeave), 30000);
+      cleanup = () => clearInterval(iv);
+    }
   }
 
   // ---------- Listes à cocher simples (départ, questions, photos) ----------
@@ -2078,6 +2174,7 @@
       ${summaryCard()}
       <a class="btn block" href="#/msg" style="margin-top:10px">📱 Prévenir les proches</a>
 
+      <a class="btn block" href="#/partir" style="margin-top:10px">🚗 Quand partir ? Le repère et les signes</a>
       <h2>Appeler sans attendre si…</h2>
       <div class="box caution"><ul style="margin:0;padding-left:20px">${C.alerts.map((a) => `<li style="margin:6px 0">${esc(a)}</li>`).join("")}</ul></div>
 
@@ -2275,6 +2372,7 @@
     else if (parts[0] === "card") renderCard();
     else if (parts[0] === "todo") renderTodo();
     else if (parts[0] === "log") renderLog();
+    else if (parts[0] === "partir") renderLeave();
     else if (parts[0] === "depart") renderList("depart", "#/timer");
     else if (parts[0] === "questions") renderList("questions", "#/ready");
     else if (parts[0] === "photos") renderList("photos", lastEvent("naissance") ? "#/birth" : "#/");

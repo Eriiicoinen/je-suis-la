@@ -49,7 +49,7 @@ for (const f of ["config.js", "content.js"]) vm.runInContext(fs.readFileSync(pat
 const routes = ["#/", "#/phase/latence", "#/phase/actif", "#/phase/transition", "#/phase/poussee", "#/phase/actif/pos/hanches",
   "#/timer", "#/breathe", "#/words", "#/mat", "#/pro", "#/coach", "#/show", "#/prefs", "#/bag", "#/msg",
   "#/train", "#/train/session", "#/train/quiz", "#/birth", "#/after", "#/ready", "#/imprevus", "#/imprevus/cesarienne",
-  "#/card", "#/todo", "#/log", "#/depart", "#/questions", "#/photos", "#/calme", "#/calme/apres"];
+  "#/card", "#/todo", "#/log", "#/depart", "#/questions", "#/photos", "#/calme", "#/calme/apres", "#/partir"];
 
 const now = Date.now(), M = 60000;
 const scenarios = {
@@ -91,6 +91,15 @@ const checks = [
 ];
 store["jsl-state-v1"] = JSON.stringify({ accepted: true, ...scenarios["contraction oubliée"] });
 vm.runInContext(fs.readFileSync(path.join(APP, "app.js"), "utf8"), ctx);
+{ const st0 = { accepted: true, contractions: [{ s: now - 12 * M, e: now - 11 * M, i: 2 }, { s: now - 3 * M, e: now - 2 * M }] };
+  store["jsl-state-v1"] = JSON.stringify(st0); ctx.location.hash = "#/timer";
+  vm.runInContext(fs.readFileSync(path.join(APP, "app.js"), "utf8"), ctx);
+  checks.push(["intensité demandée après FIN", /Intensité de cette contraction/.test(view.innerHTML) && /data-editi/.test(view.innerHTML)]);
+  checks.push(["intensité moyenne affichée", /Intensité moyenne 2\/5/.test(view.innerHTML)]);
+  ctx.location.hash = "#/partir";
+  vm.runInContext(fs.readFileSync(path.join(APP, "app.js"), "utf8"), ctx);
+  checks.push(["écran quand partir", /Quand partir/.test(view.innerHTML) && /1er bébé/.test(view.innerHTML)]);
+  store["jsl-state-v1"] = JSON.stringify({ accepted: true, ...scenarios["contraction oubliée"] }); ctx.location.hash = "#/timer"; vm.runInContext(fs.readFileSync(path.join(APP, "app.js"), "utf8"), ctx); }
 checks.push(["alerte FIN oubliée", /oublié d'appuyer sur FIN/.test(view.innerHTML)]);
 store["jsl-state-v1"] = JSON.stringify({ accepted: true, ...scenarios["bébé né"] });
 ctx.location.hash = "#/todo";

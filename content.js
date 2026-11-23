@@ -713,6 +713,57 @@ window.CONTENT = {
       why: "Ça arrive, et ça n'a rien de honteux. Une fois assis{|e}, et l'équipe prévenue, ça passe ; debout, on tombe et l'équipe doit s'occuper de toi." }
   ],
 
+  // ---------- Intensité des contractions (ressenti, pas une mesure médicale) ----------
+  intensity: [
+    { v: 1, label: "Légère", hint: "Elle parle et rit pendant" },
+    { v: 2, label: "Gênante", hint: "Elle parle, mais ralentit" },
+    { v: 3, label: "Forte", hint: "Elle s'arrête et respire" },
+    { v: 4, label: "Très forte", hint: "Elle ne peut plus parler" },
+    { v: 5, label: "Maximale", hint: "Elle a besoin de toi à 100 %" }
+  ],
+
+  // ---------- Quand partir à la maternité ? (à faire valider par votre maternité) ----------
+  leave: {
+    intro: "Le bon moment dépend de votre maternité, de la distance et de votre histoire. Le repère ci-dessous est le plus courant : demandez à la maternité le sien, et c'est le sien qui compte.",
+    rule: {
+      first: { label: "1er bébé", text: "Contractions régulières toutes les 5 minutes environ, depuis 2 heures, malgré le repos, un bain ou du paracétamol si la maternité l'a autorisé." },
+      next: { label: "Bébé suivant", text: "Contractions régulières toutes les 10 minutes environ, depuis 1 heure : le travail va souvent plus vite. Partez plus tôt si le précédent accouchement a été rapide." }
+    },
+    signs: [
+      "Elles sont régulières : même écart, qui se raccourcit au fil du temps",
+      "Elles durent plus longtemps : 1 minute environ",
+      "Elles sont plus fortes : elle ne peut plus parler ni marcher pendant (intensité 4 ou 5)",
+      "Elles ne passent pas avec le repos, un bain chaud ou en changeant de position"
+    ],
+    callNow: [
+      "Perte des eaux, même sans contractions (la maternité dira quand venir)",
+      "Liquide vert, marron ou malodorant",
+      "Saignement plus abondant que des pertes rosées",
+      "Le bébé bouge beaucoup moins",
+      "Fièvre, maux de tête intenses, troubles de la vue, douleur en haut du ventre",
+      "Douleur continue, sans répit entre les contractions",
+      "Contractions régulières avant 37 semaines",
+      "Envie irrépressible de pousser"
+    ],
+    earlier: [
+      "Maternité à plus de 45 minutes, ou trajet difficile (bouchons, neige, nuit)",
+      "Accouchement précédent rapide, ou ancienne césarienne",
+      "Streptocoque B positif, bébé en siège, jumeaux, grossesse suivie de près : la maternité vous a souvent donné des consignes particulières",
+      "Vous êtes inquiets, ou elle ne se sent pas bien : c'est une raison suffisante pour appeler"
+    ],
+    wait: [
+      "Contractions encore irrégulières ou espacées : reposez-vous, elle dort entre deux si elle peut",
+      "Douche ou bain chaud, manger léger, boire, marcher un peu",
+      "Continuez de noter les contractions et leur intensité dans le minuteur",
+      "Préparez la voiture, le sac et prévenez la personne qui garde les aînés"
+    ],
+    road: [
+      "Appelez la maternité avant de partir : ils vous diront si c'est le moment",
+      "Ce n'est pas elle qui conduit. Assise à l'arrière ou siège incliné, ceinture sous le ventre",
+      "Si la naissance semble imminente (envie de pousser, bébé qui arrive) : ne prenez pas la route, appelez le 15"
+    ]
+  },
+
   // ---------- Messages aux proches ----------
   messages: [
     { id: "depart", title: "🚗 On part à la maternité", text: "On part à la maternité ! Tout va bien, on vous donne des nouvelles dès qu'on peut. Pas besoin de répondre 🤍" },

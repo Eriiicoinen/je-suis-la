@@ -76,6 +76,10 @@ puis ouvre http://localhost:8765
 - Accès depuis l'accueil (Avant, Jour J, Après) et le mode coach entre deux contractions. « SOS calme essayé une fois » s'ajoute à « Êtes-vous prêts ? » et se coche tout seul.
 - Contenu dans `content.js` → `calm`, **à faire relire par une sage-femme**.
 
+## Nouveautés v14
+- **Intensité des contractions (1 à 5)** : demandée juste après FIN (minuteur et mode coach), modifiable dans l'historique (colonne « Int. »). Intensité moyenne sur la dernière heure dans le minuteur et dans le résumé pour la maternité.
+- **Quand partir ?** (`#/partir`) : où vous en êtes par rapport à votre repère, le repère courant (1er bébé / suivant), quand appeler sans attendre, partir plus tôt si…, patienter à la maison, le trajet. Accès depuis l'accueil, le minuteur et l'onglet Maternité. Contenu dans `content.js` → `leave` et `intensity`, **à faire relire par une sage-femme**.
+
 ## Vérifier après une modification
 ```
 node tools/smoke-test.js
